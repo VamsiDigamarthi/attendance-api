@@ -13,6 +13,15 @@ const NAttendanceSchema = new Schema(
     endTime: {
       type: String,
     },
+    longitude: {
+      type: String,
+    },
+    latitude: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
     head: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }

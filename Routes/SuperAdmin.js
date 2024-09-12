@@ -5,6 +5,7 @@ import { ensureSuperAdmin } from "../Middlewares/SuperAdminMiddleware.js";
 import {
   allFetchAllEmployeesInSpecificCompany,
   onFetchNotApprovedEmployeesInSpecificCompany,
+  onFindHrs,
   onGivenApprovalSpecificEmployeesInSpecificCompany,
   updateUserPermissions,
 } from "../Controllers/SuperAdmin.js";
@@ -15,7 +16,7 @@ router.get(
   "/all-employees",
   authenticateToken,
   CheckingUser,
-  ensureSuperAdmin,
+  // ensureSuperAdmin,
   allFetchAllEmployeesInSpecificCompany
 );
 
@@ -31,7 +32,7 @@ router.patch(
   "/give-approval/:empId",
   authenticateToken,
   CheckingUser,
-  ensureSuperAdmin,
+  // ensureSuperAdmin,
   onGivenApprovalSpecificEmployeesInSpecificCompany
 );
 
@@ -42,5 +43,7 @@ router.patch(
   ensureSuperAdmin,
   updateUserPermissions
 );
+
+router.get("/find-hrs", authenticateToken, CheckingUser, onFindHrs);
 
 export default router;

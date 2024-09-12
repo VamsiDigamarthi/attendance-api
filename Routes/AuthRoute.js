@@ -23,8 +23,8 @@ router.get("/profile", authenticateToken, CheckingUser, onGetProfile);
 
 router.patch(
   "/forgot-password",
-  authenticateToken,
-  CheckingUser,
+  // authenticateToken,
+  // CheckingUser,
   onForgotPassword
 );
 

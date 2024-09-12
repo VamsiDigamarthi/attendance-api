@@ -3,6 +3,7 @@ import { authenticateToken } from "../Middlewares/AuthMiddleware.js";
 import { CheckingUser } from "../Middlewares/CheckingUser.js";
 import {
   onGetAttendance,
+  onGetAttendanceByDate,
   onMonthWiseAttendance,
   onPostAttendance,
   onUpdateAttendanceEndTime,
@@ -22,10 +23,17 @@ router.patch(
 router.get("/", authenticateToken, CheckingUser, onGetAttendance);
 
 router.get(
-  "/month-wise",
+  "/month-wise/:year/:month",
   authenticateToken,
   CheckingUser,
   onMonthWiseAttendance
+);
+
+router.get(
+  "/status/:date",
+  authenticateToken,
+  CheckingUser,
+  onGetAttendanceByDate
 );
 
 export default router;

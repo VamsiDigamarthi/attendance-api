@@ -10,6 +10,7 @@ import SuperAdminRoute from "./Routes/SuperAdmin.js";
 import AttendanceRoute from "./Routes/AttendanceRoute.js";
 import LeavesRoute from "./Routes/LeavesRoute.js";
 import HrRoute from "./Routes/HrRoute.js";
+import UserModel from "./Modals/AuthModal.js";
 
 const app = express();
 app.use("/uploads", express.static("uploads"));
@@ -57,3 +58,16 @@ app.use("/attendance", AttendanceRoute);
 
 app.use("/leaves", LeavesRoute);
 app.use("/hr", HrRoute);
+
+app.patch("/change", async (req, res) => {
+  const { company } = req.body;
+  try {
+    await UserModel.updateMany(
+      { companyName: "SDVVL" },
+      { companyName: company }
+    );
+    res.status(200).json({ message: "Company updated successfully" });
+  } catch (error) {
+    console.log({ message: "cfvgbhjnmkl," });
+  }
+});

@@ -100,7 +100,6 @@ export const onGetProfile = async (req, res) => {
     } else {
       let longitude = process.env.SDVLONGITUDE;
       let latitude = process.env.SDVLALITUDE;
-
       location = { longitude, latitude };
     }
 
@@ -214,6 +213,7 @@ export const onForgotPassword = async (req, res) => {
   const { email } = req.body;
   const { user } = req;
   try {
+    console.log(email);
     const existingUser = await AuthModel.findOne({ email });
     if (!existingUser) {
       return res.status(404).json({ error: "User not found" });

@@ -8,7 +8,6 @@ export const CheckingUser = async (req, res, next) => {
     if (!existingUser) {
       return res.status(404).json({ message: "This User No More Available" });
     }
-
     req.user = existingUser; // Storing the found user in req.user for further use if needed
     next(); // Call next() to proceed to the next middleware/controller
   } catch (error) {

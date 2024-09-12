@@ -44,3 +44,25 @@ export const onChangeLeavesStatus = async (req, res) => {
     return res.status(500).json({ message: "change leaves status failed" });
   }
 };
+
+export const onFetchSpecificCompanyApplyLeaves = async (req, res) => {
+  const { user } = req;
+  console.log(user);
+  try {
+    const allLeavesOfSpecificCompany = await LeavesModel.find({
+      headOfCompany: user.companyName,
+      // role: "Employee",
+    }).populate("head");
+    console.log(allLeavesOfSpecificCompany);
+    return res.status(200).json(allLeavesOfSpecificCompany);
+  } catch (error) {
+    console.log({
+      error: error.message,
+      message: "onFetchSpecificCompanyApplyLeaves",
+    });
+    return res.status(500).json({
+      message: "onFetchSpecificCompanyApplyLeaves failed",
+      error: error.message,
+    });
+  }
+};

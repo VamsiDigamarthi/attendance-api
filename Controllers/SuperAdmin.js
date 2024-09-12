@@ -52,18 +52,27 @@ export const onGivenApprovalSpecificEmployeesInSpecificCompany = async (
 ) => {
   const { user } = req;
   const { empId } = req.params;
+  const { isApprovated } = req.body;
   try {
-    const updatedEmployee = await UserModel.findOneAndUpdate(
-      { empId: empId, companyName: user.companyName },
-      { isApprovated: true },
-      { new: true }
-    );
-    if (!updatedEmployee) {
-      return res.status(404).json({ message: "Employee not found" });
+    // console.log(empId);
+    // console.log(user);
+    if (user?.role === "SuperAdmin" || user.role === "Admin") {
+      const updatedEmployee = await UserModel.findOneAndUpdate(
+        { _id: empId, companyName: user.companyName },
+        { isApprovated: isApprovated },
+        { new: true }
+      );
+      if (!updatedEmployee) {
+        return res.status(404).json({ message: "Employee not found" });
+      }
+      return res
+        .status(200)
+        .json({ message: "approval updated successfully..!", updatedEmployee });
+    } else {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform this action" });
     }
-    return res
-      .status(200)
-      .json({ message: "approval updated successfully..!", updatedEmployee });
   } catch (error) {
     console.log({
       error: error.message,
@@ -83,7 +92,7 @@ export const updateUserPermissions = async (req, res) => {
   try {
     // Find the user by empId and update the permissions
     const updatedUser = await UserModel.findOneAndUpdate(
-      { empId }, // Filter by empId
+      { _id: empId }, // Filter by empId
       { $set: { permissions: req.body } }, // Update the permissions
       { new: true } // Return the updated document
     );
@@ -109,5 +118,25 @@ export const updateUserPermissions = async (req, res) => {
       message: "Failed to update permissions",
     });
     return res.status(500).json({ message: "Failed to update permissions" });
+  }
+};
+
+export const onFindHrs = async (req, res) => {
+  const { user } = req;
+  try {
+    const hrs = await UserModel.find(
+      {
+        companyName: user.companyName,
+        role: "Admin",
+      },
+      "-password -createdAt -updatedAt -__v"
+    );
+    return res.status(200).json(hrs);
+  } catch (error) {
+    console.log({
+      error: error.message,
+      message: "Failed to find hrs",
+    });
+    return res.status(500).json({ message: "Failed to find hrs" });
   }
 };

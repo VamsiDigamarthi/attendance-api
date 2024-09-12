@@ -9,6 +9,7 @@ export const onApplyLeaves = async (req, res) => {
       dateRange,
       reason,
       head: user._id,
+      headOfCompany: user.companyName,
       documente: req.file ? req.file.path : null,
     });
     const savedLeaveApplication = await leaveApplication.save();

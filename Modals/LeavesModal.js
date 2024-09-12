@@ -25,6 +25,10 @@ const LeavesSchema = new Schema(
       required: false,
     },
     head: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    headOfCompany: {
+      type: String,
+      required: true, // or false depending on your requirement
+    },
   },
   { timestamps: true }
 );

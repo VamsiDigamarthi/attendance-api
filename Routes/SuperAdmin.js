@@ -24,7 +24,7 @@ router.get(
   "/not-approved-employees",
   authenticateToken,
   CheckingUser,
-  ensureSuperAdmin,
+  // ensureSuperAdmin,
   onFetchNotApprovedEmployeesInSpecificCompany
 );
 
@@ -44,6 +44,12 @@ router.patch(
   updateUserPermissions
 );
 
-router.get("/find-hrs", authenticateToken, CheckingUser, onFindHrs);
+router.get(
+  "/find-hrs",
+  authenticateToken,
+  CheckingUser,
+  ensureSuperAdmin,
+  onFindHrs
+);
 
 export default router;

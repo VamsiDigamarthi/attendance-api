@@ -51,6 +51,9 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    about: {
+      type: String,
+    },
     gender: {
       type: String,
       enum: ["Male", "Female", "Other"],

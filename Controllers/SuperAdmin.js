@@ -29,11 +29,17 @@ export const onFetchNotApprovedEmployeesInSpecificCompany = async (
 ) => {
   const { user } = req;
   try {
-    const notApprovedEmployeesInSpecificCompany = await UserModel.find({
-      companyName: user.companyName,
-      isApprovated: false,
-    });
-    return res.status(200).json(notApprovedEmployeesInSpecificCompany);
+    if (user?.role === "SuperAdmin" || user.role === "Admin") {
+      const notApprovedEmployeesInSpecificCompany = await UserModel.find({
+        companyName: user.companyName,
+        isApprovated: false,
+      });
+      return res.status(200).json(notApprovedEmployeesInSpecificCompany);
+    } else {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to perform this action" });
+    }
   } catch (error) {
     console.log({
       error: error.message,

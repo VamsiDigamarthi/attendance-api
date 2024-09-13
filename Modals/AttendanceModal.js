@@ -16,6 +16,9 @@ const NAttendanceSchema = new Schema(
     longitude: {
       type: String,
     },
+    status: {
+      type: String,
+    },
     latitude: {
       type: String,
     },

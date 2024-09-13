@@ -3,7 +3,7 @@ import NAttendanceModel from "../Modals/AttendanceModal.js";
 export const onPostAttendance = async (req, res) => {
   const { user } = req;
   const { date, startTime, longitude, latitude, address } = req.body;
-  console.log(date);
+  // console.log(date);
   try {
     const existingAttendance = await NAttendanceModel.findOne({
       head: user._id,
@@ -47,15 +47,24 @@ export const onPostAttendance = async (req, res) => {
 export const onUpdateAttendanceEndTime = async (req, res) => {
   const { user } = req;
   const { date, endTime, longitude, latitude, address } = req.body;
-
+  // console.log(endTime, longitude, latitude, address);
   try {
     // Find the attendance record for the given date and start time
+
+    // console.log(at);
     const attendance = await NAttendanceModel.findOneAndUpdate(
       {
         head: user._id,
         date,
       },
-      { endTime, longitude, latitude, address }, // Update the end time
+      {
+        $set: {
+          endTime,
+          longitude,
+          latitude,
+          address,
+        },
+      },
       { new: true } // Return the updated document
     ).select("-createdAt -updatedAt -__v -head"); // Exclude createdAt and updatedAt fields
 
@@ -102,7 +111,7 @@ export const onGetAttendance = async (req, res) => {
 export const onMonthWiseAttendance = async (req, res) => {
   const { user } = req;
   const { year, month } = req.params;
-  console.log(year, month);
+  // console.log(year, month);
   const monthInt = parseInt(month, 10);
   if (isNaN(monthInt) || monthInt < 1 || monthInt > 12) {
     return res.status(400).json({ message: "Invalid month value" });

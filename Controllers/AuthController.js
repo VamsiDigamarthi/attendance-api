@@ -92,7 +92,7 @@ export const onGetProfile = async (req, res) => {
       "-password -createdAt -updatedAt -__v"
     );
     let location = {};
-    if (profile.companyName === "NGS") {
+    if (profile.companyName === "Nuhvin Global Services Private Limited") {
       let longitude = process.env.NLONGITUDE;
       let latitude = process.env.NLALITUDE;
 

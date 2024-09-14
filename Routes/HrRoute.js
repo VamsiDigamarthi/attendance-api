@@ -13,7 +13,7 @@ router.patch(
   "/leaves-status-change/:leaveId",
   authenticateToken,
   CheckingUser,
-  ensureAdmin,
+  // ensureAdmin,
   onChangeLeavesStatus
 );
 
@@ -21,7 +21,7 @@ router.get(
   "/leaves",
   authenticateToken,
   CheckingUser,
-  ensureAdmin,
+  // ensureAdmin,
   onFetchSpecificCompanyApplyLeaves
 );
 

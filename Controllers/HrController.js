@@ -49,6 +49,12 @@ export const onFetchSpecificCompanyApplyLeaves = async (req, res) => {
   const { user } = req;
   console.log(user);
   try {
+    if (!["SuperAdmin", "Admin"].includes(user.role)) {
+      return res
+        .status(403)
+        .json({ message: "You don't have permission to access this feature" });
+    }
+
     const allLeavesOfSpecificCompany = await LeavesModel.find({
       headOfCompany: user.companyName,
       // role: "Employee",
